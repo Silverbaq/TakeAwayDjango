@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Events</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row mb-1">
+        <div class="col-12">
+            <a href="{% url 'new_event' %}" class="btn float-right btn-primary">Add event</a>
+        </div>
+    </div>
+
+    {% for event in events %}
+        <a href="{% url 'event' pk=event.pk %}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">{{ event }}</div>
+                        <div class="col-6">
+                            <small class="float-right">{{ event.start_at }} - {{ event.end_at }}</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <small>{{ event.location }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Events</a></li>
+    <li class="breadcrumb-item active">{{ event }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row mb-1">
+        <div class="col-12">
+            <a href="{% url 'create_order' pk=event.pk %}" class="btn float-right btn-primary">Create order</a>
+        </div>
+    </div>
+
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-12">
+                {{ event }}
+                {{ event.location }}
+                {{ event.start_at }}
+                {{ event.end_at }}
+            </div>
+        </div>
+
+
+    </div>
+
+    {% for order in event.orders.all %}
+        <a href="{% url 'order' order_pk=order.pk event_pk=event.pk  %}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">Order from: {{ order.order_from }}</div>
+                        <div class="col-12"><small>Started by: {{ order.starter }}</small></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <small>{{ event.location }}</small>
+                        </div>
+                        <div class="col-6">
+                            <small class="float-right">Order at: {{ order.when }}</small>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+
+{% endblock %}
